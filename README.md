@@ -1,7 +1,8 @@
 # Karlitis
 
 1. Set up Docker
-2. Run `docker-compose up` from the source code folder
+2. Run `docker-compose up -d` from the source code folder
+3. To regenerate the postgres database, delete the postgresdata folder
 
 # Getting Started with Create React App
 
