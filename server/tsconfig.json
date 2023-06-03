@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": "./build"
+	},
+	"include": [
+		"./server.ts"
+	],
+	"exclude": [
+		"../node_modules/**",
+		"./build/**"
+	],
+}
