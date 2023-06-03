@@ -1,7 +1,11 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"outDir": "./build"
+		"target": "ES6",
+		"outDir": "./build",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "nodenext"
 	},
 	"include": [
 		"./server.ts"
