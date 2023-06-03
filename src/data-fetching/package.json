@@ -1,0 +1,17 @@
+{
+  "name": "data-fetching",
+  "version": "1.0.0",
+  "description": "Downloads data to populate the postgres database",
+  "main": "student-count.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/node": "^20.2.5",
+    "tmp": "^0.2.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  }
+}
