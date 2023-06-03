@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Dropdown from  './Dropdown';
+import Map from './Map';
+import * as L from 'leaflet';
+import '/node_modules/leaflet/dist/leaflet.css';
 
 function App() {
   return (
@@ -13,7 +16,7 @@ function App() {
       <div className="flex flex-col lg:flex-row-reverse">
 
         {/* Map placeholder */}
-        <div className="bg-blue-100 h-80 lg:w-full"></div>
+        <Map />
 
         <div className="lg:w-80 lg:h-screen">
           <Dropdown title="Rīgas Pilsētas skola">
