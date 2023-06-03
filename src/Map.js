@@ -16,7 +16,7 @@ function Map() {
     return (
         <div
         id="map"
-        className="bg-blue-100 h-80 lg:w-full"></div>
+        className="bg-blue-100 h-80 lg:w-full lg:h-screen"></div>
     )
 }
 

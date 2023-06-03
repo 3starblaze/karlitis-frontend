@@ -15,7 +15,6 @@ function App() {
 
       <div className="flex flex-col lg:flex-row-reverse">
 
-        {/* Map placeholder */}
         <Map />
 
         <div className="lg:w-80 lg:h-screen">
