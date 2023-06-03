@@ -8,6 +8,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How to develop
+
+For frontend run these commands:
+- `npm start`
+- `npx tailwindcss -i ./src/App.css -o ./public/output.css --watch`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
