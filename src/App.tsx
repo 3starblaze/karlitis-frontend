@@ -7,8 +7,12 @@ import '/node_modules/leaflet/dist/leaflet.css';
 function App() {
   return (
     <div className="bg-gray-100 h-screen">
-      <header className="bg-white shadow p-4">
-        <p className="text-2xl">Kārlītis</p>
+      <header className="bg-[#213458] shadow p-4">
+        <img
+          src="/karlitis_logo-karlitis.png"
+          className="h-5"
+          alt="Karlitis logo"
+        />
       </header>
 
 
