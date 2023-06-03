@@ -1,3 +1,8 @@
+# Karlitis
+
+1. Set up Docker
+2. Run `docker-compose up` from the source code folder
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

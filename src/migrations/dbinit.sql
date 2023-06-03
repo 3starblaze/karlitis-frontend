@@ -1,0 +1,3 @@
+CREATE USER karlitis WITH PASSWORD 'karlitis';
+CREATE DATABASE karlitisdb;
+GRANT ALL PRIVILEGES ON DATABASE karlitisdb TO karlitis;
