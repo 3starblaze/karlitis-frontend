@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Dropdown from  './Dropdown';
 
 function App() {
   return (
@@ -8,19 +9,18 @@ function App() {
         <p className="text-2xl">Kārlītis</p>
       </header>
 
+
       <div className="flex flex-col lg:flex-row-reverse">
 
         {/* Map placeholder */}
         <div className="bg-blue-100 h-80 lg:w-full"></div>
 
         <div className="lg:w-80 lg:h-screen">
-          <div className="p-4">
-            <h2 className="text-xl mb-4">School info</h2>
-            <p>Pirmā piemēra skola</p>
+          <Dropdown title="Rīgas Pilsētas skola">
             <p>Eksāmena vidējā vērtība:</p>
             <p className="pl-4">9.klase 89.92%</p>
             <p className="pl-4">12.klase 92.73%</p>
-          </div>
+          </Dropdown>
         </div>
       </div>
     </div>
