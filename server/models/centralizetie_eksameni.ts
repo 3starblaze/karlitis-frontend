@@ -53,49 +53,49 @@ export class CentralizetieEksameni extends Model<CentralizetieEksameniData, Cent
 
 	@Default(false)
 	@Column(DataType.BOOLEAN)
-	optimal_level: boolean;
+	optimal_level: boolean | null;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	anglu_val?: number;
+	anglu_val?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	biologija?: number;
+	biologija?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	fizika?: number;
+	fizika?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	francu_val?: number;
+	francu_val?: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	kimija?: number;
+	kimija?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	krievu_val?: number;
+	krievu_val?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	latv_val?: number;
+	latv_val?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	vesture?: number;
+	vesture?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	matematika?: number;
+	matematika?: number | null;
 	
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	vacu_val?: number;
+	vacu_val?: number | null;
 
 	@BelongsTo(() => School, 'school')
-	schools?: ReturnType<() => School>;
+	schools?: ReturnType<() => School> | null;
 };
 

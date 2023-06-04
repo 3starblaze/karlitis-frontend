@@ -38,47 +38,47 @@ export class School extends Model<SchoolData, SchoolInput>{
 
 	@AllowNull(true)
 	@Column(DataType.STRING)
-	adrese!: string;
+	adrese!: string | null;
 
 	@AllowNull(true)
 	@Column(DataType.BIGINT)
-	gps_x!: number;
+	gps_x!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.BIGINT)
-	gps_y!: number;
+	gps_y!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	skolotaji!: number;
+	skolotaji!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.DECIMAL)
-	skolotaju_videja_alga!: number;
+	skolotaju_videja_alga!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	class_start_time!: number;
+	class_start_time!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
-	class_end_time!: number;
+	class_end_time!: number | null;
 
 	@AllowNull(true)
 	@Column(DataType.STRING)
-	phone_number!: string;
+	phone_number!: string | null;
 
 	@AllowNull(true)
 	@Column(DataType.STRING)
-	email!: string;
+	email!: string | null;
 
 	@AllowNull(true)
 	@Column(DataType.STRING)
-	website!: string;
+	website!: string | null;
 
 	@HasMany(() => StudentCount, 'school')
-	studentCounts?: ReturnType<() => StudentCount[]>;
+	studentCounts?: ReturnType<() => StudentCount[]> | null;
 
 	@HasMany(() => CentralizetieEksameni, 'school')
-	CEx?: ReturnType<() => CentralizetieEksameni[]>;
+	CEx?: ReturnType<() => CentralizetieEksameni[]> | null;
 };

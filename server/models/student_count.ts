@@ -89,7 +89,7 @@ export class StudentCount extends Model<StudentCountData, StudentCountInput>{
 	count_12_klase!: number;
 
 	@BelongsTo(() => School, 'school')
-	schoolInstance?: ReturnType<() => School>;
+	schoolInstance?: ReturnType<() => School> | null;
 
 	totalStudents(): number {
 		return this.count_1_klase +
