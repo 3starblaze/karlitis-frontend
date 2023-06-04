@@ -1,16 +1,23 @@
 import { useEffect } from 'react';
 import * as L from 'leaflet';
 import '/node_modules/leaflet/dist/leaflet.css';
+import proj4 from 'proj4';
 
 let map;
 function Map() {
     useEffect(() => {
-        if(!map) map = L.map('map').setView([51.505, -0.09], 13);
+        // Example of how to turn EPSG:3857 (coords in data) into LatLng (coords used by leaflet) 
+        const latLngCoord = proj4("EPSG:3857", "EPSG:4326", [2807409, 7682065]);
+        const flippedCoord = [latLngCoord[1], latLngCoord[0]];
+        if(!map) map = L.map('map').setView(flippedCoord, 13);
 
         let test = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
+
+        let point = L.marker(flippedCoord);
+        point.addTo(map);
         test.addTo(map);
     });
     return (
