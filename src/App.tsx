@@ -99,6 +99,16 @@ function App() {
       <div className="flex flex-col lg:flex-row-reverse">
         <Map />
         <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
+          <div className="fixed bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
+            { schools?.length } rezultāti
+          </div>
+
+          {/* Non-fixed element duplicate is here in order to reserve sapce */}
+          <div className="w-full p-4">
+            { schools?.length } rezultāti
+          </div>
+
+
           {/* Card */}
           <div className="m-4 p-4 border border-custom-blue shadow-md">
             <p>Hello there</p>
