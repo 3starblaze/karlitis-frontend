@@ -37,13 +37,14 @@ interface StudentCountData{
 	count_12_klase: number;
 };
 
-type SchoolInput = Optional<StudentCountData, never>;
-type SchoolOutput = Required<StudentCountData>;
+export type StudentCountInput = Optional<StudentCountData, never>;
+type StudentCountOutput = Required<StudentCountData>;
 
 @Table({
-	tableName: 'student_count'
+	tableName: 'student_count',
+	timestamps: false,
 })
-export class StudentCount extends Model<StudentCountData, SchoolInput>{
+export class StudentCount extends Model<StudentCountData, StudentCountInput>{
 	@Column
 	date!: Date;
 
