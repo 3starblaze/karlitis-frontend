@@ -76,10 +76,8 @@ function App() {
 
 
       <div className="flex flex-col lg:flex-row-reverse">
-
         <Map />
-
-        <div className="lg:w-80 lg:h-screen">
+        <div className="lg:w-2/3 lg:h-screen">
           <Dropdown title="Rīgas Pilsētas skola">
             <p>Eksāmena vidējā vērtība:</p>
             <p className="pl-4">9.klase 89.92%</p>
