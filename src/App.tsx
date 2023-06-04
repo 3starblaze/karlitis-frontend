@@ -1,9 +1,11 @@
 import './App.css';
 import Map from './Map';
-import { Menu, Select } from 'antd';
+import { Menu, Select, Input } from 'antd';
 import * as L from 'leaflet';
 import { useEffect, useState } from 'react';
 import '/node_modules/leaflet/dist/leaflet.css';
+import Fuse from 'fuse.js';
+import { addOptions } from 'sequelize-typescript';
 
 function baseMenuItems() {
   const children = [
@@ -62,17 +64,37 @@ function schoolToPoint(school: any) {
 }
 
 function App() {
-  const [schools, setSchools] = useState<any[]>([]);
+  const fuseOptions = {
+    keys: ['name']
+  };
+  interface SchoolState {
+    allSchools: any[],
+    filteredSchools: any[],
+    fuse: Fuse<any>,
+  }
+  const [schools, setSchools] = useState<SchoolState>({ allSchools: [], filteredSchools: [], fuse: new Fuse([], fuseOptions) });
 
   useEffect(() => {
-    if (schools?.length !== 0) return;
+    if (schools.allSchools.length !== 0) return;
     const response = fetch("http://localhost:6942/api/schools/list")
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            setSchools(data);
-          });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setSchools({ allSchools: data, filteredSchools: data, fuse: new Fuse(data, fuseOptions) });
+      });
   });
+
+  const onSearch = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    let results = schools.allSchools;
+      if (e.target.value !== "")
+      results = schools.fuse.search(e.target.value).map(res => res.item);
+
+    setSchools({
+      allSchools: schools.allSchools,
+      filteredSchools: results,
+      fuse: schools.fuse,
+    });
+  };
 
   return (
     <div className="bg-custom-white h-full">
@@ -100,7 +122,7 @@ function App() {
         <Menu
           className="lg:hidden"
           mode="vertical"
-          items={ menuItems() }
+          items={menuItems()}
         />
 
       </header>
@@ -108,50 +130,35 @@ function App() {
 
       <div className="flex flex-col lg:flex-row-reverse">
         <Map
-          points={ schools.map(schoolToPoint) }
+          points={schools.filteredSchools.map(schoolToPoint)}
         />
-        <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
-          <div className="fixed bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
-            { schools?.length } rezultāti
+        <div className="flex flex-col lg:w-2/3 lg:h-screen">
+          <div className="sticky bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
+            {schools.filteredSchools.length} rezultāti
+            <Input placeholder="meklēt" onChange={onSearch} style={{ width: 200 }} />
+            <div ></div>
+
           </div>
 
-          {/* Non-fixed element duplicate is here in order to reserve sapce */}
-          <div className="w-full p-4">
-            { schools?.length } rezultāti
-          </div>
+          <div className="overflow-scroll">
 
+            <div>
+              <ul>
+                {schools.filteredSchools.map((val) => (
+                  <li
+                    key={val.id}
+                    className="m-4 border border-custom-blue rounded-md shadow-md flex flex-col"
+                  >
+                    <div className="border-b border-custom-blue p-4 text-xl">{val.name}</div>
+                    <p className="p-4">
+                      Centralā eksāmena rezultāts: <span className="text-xl">{val.examScore}%</span>
+                    </p>
 
-          {/* Card */}
-          <div className="m-4 p-4 border border-custom-blue shadow-md">
-            <p>Hello there</p>
-            <p>This is an example paragraph.</p>
-          </div>
-
-          <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">
-            <p className="mb-2">
-              Izvēlies skolu
-            </p>
-            <Select
-              options={ schoolSelectOptions() }
-            />
-          </div>
-
-          <div>
-            <ul>
-              { schools?.map((val) => (
-                <li
-                  key={ val.id }
-                  className="m-4 border border-custom-blue rounded-md shadow-md flex flex-col"
-                >
-                  <div className="border-b border-custom-blue p-4 text-xl">{ val.name }</div>
-                  <p className="p-4">
-                    Centralā eksāmena rezultāts: <span className="text-xl">{ val.examScore }%</span>
-                  </p>
-
-                </li>
-              ))
-              }
-            </ul>
+                  </li>
+                ))
+                }
+              </ul>
+            </div>
           </div>
         </div>
 
