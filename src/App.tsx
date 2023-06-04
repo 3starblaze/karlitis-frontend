@@ -2,6 +2,7 @@ import './App.css';
 import Map from './Map';
 import { Menu, Select } from 'antd';
 import * as L from 'leaflet';
+import { useEffect, useState } from 'react';
 import '/node_modules/leaflet/dist/leaflet.css';
 
 function baseMenuItems() {
@@ -51,8 +52,20 @@ function schoolSelectOptions() {
 
 
 function App() {
+  const [schools, setSchools] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (schools?.length !== 0) return;
+    const response = fetch("http://localhost:6942/api/schools/list")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setSchools(data);
+          });
+  });
+
   return (
-    <div className="bg-custom-white h-screen">
+    <div className="bg-custom-white h-full">
       <header
         className="bg-custom-blue shadow-md p-4 flex items-center"
       >
@@ -85,7 +98,7 @@ function App() {
 
       <div className="flex flex-col lg:flex-row-reverse">
         <Map />
-        <div className="flex flex-col lg:w-2/3 lg:h-screen">
+        <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
           {/* Card */}
           <div className="m-4 p-4 border border-custom-blue shadow-md">
             <p>Hello there</p>
@@ -100,7 +113,14 @@ function App() {
               options={ schoolSelectOptions() }
             />
           </div>
+
+          <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">
+            <ul>
+              { schools?.map((val) => <li key={ val.id }>{ val.name }</li>) }
+            </ul>
+          </div>
         </div>
+
       </div>
     </div>
   );
