@@ -19,19 +19,19 @@ import { Optional } from 'sequelize';
 
 
 interface CentralizetieEksameniData {
-	school: bigint;
+	school: number;
 	year: number;
 	optimal_level: boolean;
 	anglu_val?: number;
+	francu_val?: number;
+	krievu_val?: number;
+	vacu_val?: number;
+	latv_val?: number;
 	biologija?: number;
 	fizika?: number;
-	francu_val?: number;
 	kimija?: number;
-	krievu_val?: number;
-	latv_val?: number;
 	vesture?: number;
 	matematika?: number;
-	vacu_val?: number;
 };
 
 export type CentralizetieEksameniInput = Optional<CentralizetieEksameniData, 'anglu_val'|'biologija'|'fizika'|'francu_val'|
