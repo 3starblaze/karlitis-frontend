@@ -15,4 +15,3 @@ console.log("cau");
 console.log("Started at 3000");
 app.listen(3000); 
 sequelize.sync({alter: false, force: false});
-StudentCount.findAll({where: { count_1_klase: 4 }});
