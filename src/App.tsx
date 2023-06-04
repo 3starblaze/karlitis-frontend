@@ -44,9 +44,9 @@ function menuItems() {
 
 function App() {
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-custom-white h-screen">
       <header
-        className="bg-[#213458] shadow p-4 flex items-center"
+        className="bg-[#213458] shadow-md p-4 flex items-center"
       >
         <a href="#">
           <img
@@ -61,9 +61,9 @@ function App() {
 
         {/* links */}
         <ul className="hidden lg:flex lg:gap-4">
-          <li className="text-white"><a href="#">Link 1</a></li>
-          <li className="text-white"><a href="#">Link 2</a></li>
-          <li className="text-white"><a href="#">Link 3</a></li>
+          <li className="text-custom-white"><a href="#">Link 1</a></li>
+          <li className="text-custom-white"><a href="#">Link 2</a></li>
+          <li className="text-custom-white"><a href="#">Link 3</a></li>
         </ul>
 
         <Menu
