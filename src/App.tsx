@@ -114,9 +114,21 @@ function App() {
             />
           </div>
 
-          <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">
+          <div>
             <ul>
-              { schools?.map((val) => <li key={ val.id }>{ val.name }</li>) }
+              { schools?.map((val) => (
+                <li
+                  key={ val.id }
+                  className="m-4 border border-custom-blue rounded-md shadow-md flex flex-col"
+                >
+                  <div className="border-b border-custom-blue p-4 text-xl">{ val.name }</div>
+                  <p className="p-4">
+                    Centralā eksāmena rezultāts: <span className="text-xl">{ val.examScore }%</span>
+                  </p>
+
+                </li>
+              ))
+              }
             </ul>
           </div>
         </div>
