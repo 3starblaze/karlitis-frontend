@@ -1,10 +1,12 @@
 import './App.css';
 import Map from './Map';
-import { Menu, Select } from 'antd';
+import { Menu, Select, Slider } from 'antd';
 import * as L from 'leaflet';
 import { useEffect, useState } from 'react';
 import '/node_modules/leaflet/dist/leaflet.css';
 import ExamForm from './ExamForm';
+import proj4 from 'proj4';
+import RangeSlider from './Slider';
 
 function baseMenuItems() {
   const children = [
@@ -62,9 +64,31 @@ function schoolToPoint(school: any) {
   };
 }
 
+
 function App() {
+  const [schoolsRaw, setSchoolsRaw] = useState<any[]>([]);
   const [schools, setSchools] = useState<any[]>([]);
   const [home, setHome] = useState<L.LatLng | null>(null);
+  const [maxDist, setMaxDist] = useState<number>(50_000);
+
+
+  function checkDistance(school: any) {
+	  const p = schoolToPoint(school);
+	  const latLngCoord = proj4("EPSG:3857", "EPSG:4326", p.latLng);
+	  const flippedCoord: [number, number] = [latLngCoord[1], latLngCoord[0]];
+	  const flippedLatLng = L.latLng(flippedCoord);
+
+	  return flippedLatLng.distanceTo(home!) < maxDist;
+	}
+
+	function getDistance(school: any) {
+	  const p = schoolToPoint(school);
+	  const latLngCoord = proj4("EPSG:3857", "EPSG:4326", p.latLng);
+	  const flippedCoord: [number, number] = [latLngCoord[1], latLngCoord[0]];
+	  const flippedLatLng = L.latLng(flippedCoord);
+
+	  return flippedLatLng.distanceTo(home!);
+	}
 
   useEffect(() => {
     if (schools?.length !== 0) return;
@@ -72,9 +96,13 @@ function App() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            setSchools(data);
+            setSchoolsRaw(data);
           });
-  });
+  }, []);
+
+  useEffect(() => {
+	setSchools(schoolsRaw.filter((val) => home === null ? true : checkDistance(val)).sort((a, b) => home === null ? a.examScore - b.examScore : getDistance(a) - getDistance(b)))
+  }, [schoolsRaw, home, maxDist]);
 
   return (
     <div className="bg-custom-white h-full">
@@ -140,7 +168,7 @@ function App() {
 				.then((response) => response.json())
 				.then((data) => {
 					setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
-					setSchools(data.updatedSchoolList);
+					setSchoolsRaw(data.updatedSchoolList);
 				});
 			}}/>
           </div>
@@ -155,6 +183,12 @@ function App() {
           </div>
 
           <div>
+			 <p className="mb-2">
+              Maksimālais attālums
+            </p>
+
+			<RangeSlider value={maxDist} callback={(val) => setMaxDist(val)}/>
+			
             <ul>
               { schools?.map((val) => (
                 <li
