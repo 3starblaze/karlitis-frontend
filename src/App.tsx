@@ -1,7 +1,6 @@
 import './App.css';
-import Dropdown from  './Dropdown';
 import Map from './Map';
-import { Menu } from 'antd';
+import { Menu, Select } from 'antd';
 import * as L from 'leaflet';
 import '/node_modules/leaflet/dist/leaflet.css';
 
@@ -41,6 +40,15 @@ function menuItems() {
   }];
 }
 
+function schoolSelectOptions() {
+  const values = ['Rīgas Valsts 1. ģimnāzija', 'Rīgas 1. tālmācības skola', "Rīgas 30. vidusskola"];
+
+  return values.map((val) => ({
+    value: val,
+    label: val,
+  }));
+}
+
 
 function App() {
   return (
@@ -77,17 +85,20 @@ function App() {
 
       <div className="flex flex-col lg:flex-row-reverse">
         <Map />
-        <div className="lg:w-2/3 lg:h-screen">
-          <Dropdown title="Rīgas Pilsētas skola">
-            <p>Eksāmena vidējā vērtība:</p>
-            <p className="pl-4">9.klase 89.92%</p>
-            <p className="pl-4">12.klase 92.73%</p>
-          </Dropdown>
-
+        <div className="flex flex-col lg:w-2/3 lg:h-screen">
           {/* Card */}
           <div className="m-4 p-4 border border-blue-300 shadow-md">
             <p>Hello there</p>
             <p>This is an example paragraph.</p>
+          </div>
+
+          <div className="m-4 p-4 border border-blue-300 shadow-md flex flex-col">
+            <p className="mb-2">
+              Izvēlies skolu
+            </p>
+            <Select
+              options={ schoolSelectOptions() }
+            />
           </div>
         </div>
       </div>
