@@ -14,8 +14,9 @@ Table centralizetie_eksameni {
   vacu_val numeric
 }
 */
-import { Model, Table, Column, DataType, AllowNull, Default } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, AllowNull, Default, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
+import { School } from './school.js';
 
 
 interface CentralizetieEksameniData {
@@ -43,6 +44,7 @@ export type CentralizetieEksameniOutput = Required<CentralizetieEksameniData>;
 	timestamps: false,
 })
 export class CentralizetieEksameni extends Model<CentralizetieEksameniData, CentralizetieEksameniInput>{
+	@ForeignKey(() => School)
 	@Column(DataType.BIGINT)
 	school: bigint;
 
@@ -93,5 +95,7 @@ export class CentralizetieEksameni extends Model<CentralizetieEksameniData, Cent
 	@Column(DataType.INTEGER)
 	vacu_val?: number;
 
+	@BelongsTo(() => School, 'school')
+	schools?: ReturnType<() => School>;
 };
 

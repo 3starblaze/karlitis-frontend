@@ -1,6 +1,7 @@
 import { Model, Table, PrimaryKey, Column, DataType, AllowNull, HasMany } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { StudentCount } from './student_count.js';
+import { CentralizetieEksameni } from './centralizetie_eksameni.js';
 
 
 interface SchoolData {
@@ -76,5 +77,8 @@ export class School extends Model<SchoolData, SchoolInput>{
 	website!: string;
 
 	@HasMany(() => StudentCount, 'school')
-	studentCounts?: ReturnType<() => StudentCount>;
+	studentCounts?: ReturnType<() => StudentCount[]>;
+
+	@HasMany(() => CentralizetieEksameni, 'school')
+	CEx?: ReturnType<() => CentralizetieEksameni[]>;
 };
