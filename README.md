@@ -3,7 +3,7 @@
 1. Set up Docker and install NodeJS 18
 2. Run `npm run docker` to launch the postgres server
 3. If you want to regenerate the postgres database, delete the postgresdata folder
-4. `npm run fetch-data` populates the datase with data
+4. `npm run fetch-data` populates the database with data
 5. `npm run modemon` launches the server
 
 # Getting Started with Create React App
