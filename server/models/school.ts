@@ -7,17 +7,17 @@ import { CentralizetieEksameni } from './centralizetie_eksameni.js';
 interface SchoolData {
 	reg_nr: number,
 	nosaukums: string,
-	adrese?: string,
+	adrese: string | null,
 	// We use the EPSG::3857 projection system for GPS coordinates
-	gps_x?: number,
-	gps_y?: number,
-	skolotaji?: number,
-	skolotaju_videja_alga?: number, // in EUR
-	class_start_time?: number,
-	class_end_time?: number,
-	phone_number?: string,
-	email?: string,
-	website?: string
+	gps_x: number | null,
+	gps_y: number | null,
+	skolotaji: number | null,
+	skolotaju_videja_alga: number | null, // in EUR
+	class_start_time: number | null,
+	class_end_time: number | null,
+	phone_number: string | null,
+	email: string | null,
+	website: string | null
 };
 
 export type SchoolInput = Optional<SchoolData, 'adrese' | 'gps_x' | 'gps_y' | 'skolotaji' | 'skolotaju_videja_alga' |

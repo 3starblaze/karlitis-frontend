@@ -93,11 +93,11 @@ export class StudentCount extends Model<StudentCountData, StudentCountInput>{
 
 	totalStudents(): number {
 		return this.count_1_klase +
-			this.count_1_klase +
 			this.count_2_klase +
 			this.count_3_klase +
 			this.count_4_klase +
 			this.count_5_klase +
+			this.count_6_klase +
 			this.count_7_klase +
 			this.count_8_klase +
 			this.count_9_klase +
