@@ -50,7 +50,7 @@ export class StudentCount extends Model<StudentCountData, StudentCountInput>{
 
 	@ForeignKey(() => School)
 	@Column(DataType.BIGINT)
-	school!: bigint;
+	school!: number;
 
 	@Column
 	count_1_klase!: number;

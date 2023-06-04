@@ -2,6 +2,7 @@ import './App.css';
 import Map from './Map';
 import { Menu, Select } from 'antd';
 import * as L from 'leaflet';
+import { useEffect, useState } from 'react';
 import '/node_modules/leaflet/dist/leaflet.css';
 
 function baseMenuItems() {
@@ -49,10 +50,32 @@ function schoolSelectOptions() {
   }));
 }
 
+function schoolToPoint(school: any) {
+  const coords = school.gps;
+  coords[0] = Number(coords[0]);
+  coords[1] = Number(coords[1]);
+
+  return {
+    latLng: coords,
+    name: school.name,
+  };
+}
 
 function App() {
+  const [schools, setSchools] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (schools?.length !== 0) return;
+    const response = fetch("http://localhost:6942/api/schools/list")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setSchools(data);
+          });
+  });
+
   return (
-    <div className="bg-custom-white h-screen">
+    <div className="bg-custom-white h-full">
       <header
         className="bg-custom-blue shadow-md p-4 flex items-center"
       >
@@ -84,8 +107,20 @@ function App() {
 
 
       <div className="flex flex-col lg:flex-row-reverse">
-        <Map />
-        <div className="flex flex-col lg:w-2/3 lg:h-screen">
+        <Map
+          points={ schools.map(schoolToPoint) }
+        />
+        <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
+          <div className="fixed bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
+            { schools?.length } rezultāti
+          </div>
+
+          {/* Non-fixed element duplicate is here in order to reserve sapce */}
+          <div className="w-full p-4">
+            { schools?.length } rezultāti
+          </div>
+
+
           {/* Card */}
           <div className="m-4 p-4 border border-custom-blue shadow-md">
             <p>Hello there</p>
@@ -100,7 +135,26 @@ function App() {
               options={ schoolSelectOptions() }
             />
           </div>
+
+          <div>
+            <ul>
+              { schools?.map((val) => (
+                <li
+                  key={ val.id }
+                  className="m-4 border border-custom-blue rounded-md shadow-md flex flex-col"
+                >
+                  <div className="border-b border-custom-blue p-4 text-xl">{ val.name }</div>
+                  <p className="p-4">
+                    Centralā eksāmena rezultāts: <span className="text-xl">{ val.examScore }%</span>
+                  </p>
+
+                </li>
+              ))
+              }
+            </ul>
+          </div>
         </div>
+
       </div>
     </div>
   );

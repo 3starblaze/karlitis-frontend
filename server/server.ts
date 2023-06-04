@@ -21,6 +21,6 @@ app.use(function(req,res){
 });
 
 console.log("cau");
-console.log("Started at 3000");
-app.listen(3000); 
+console.log("Started at 6942");
+app.listen(6942);
 sequelize.sync({alter: false, force: false});

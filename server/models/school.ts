@@ -29,7 +29,7 @@ type SchoolOutput = Required<SchoolData>;
 export class School extends Model<SchoolData, SchoolInput>{
 	@PrimaryKey
 	@Column(DataType.BIGINT)
-	reg_nr!: bigint;
+	reg_nr!: number;
 
 	@Column(DataType.STRING)
 	nosaukums!: string;
