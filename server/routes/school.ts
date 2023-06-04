@@ -3,12 +3,12 @@ import { School } from "../models/school.js";
 
 async function listSchools(req: Request, res: Response) {
     let schools = await School.findAll({
-        attributes: ['reg_nr', 'nosaukums', 'gps_lat', 'gps_lon']
+        attributes: ['reg_nr', 'nosaukums', 'gps_x', 'gps_y']
     });
     let schoolsList = schools.map(school => { return {
         id: school.reg_nr,
         name: school.nosaukums,
-        latLon: [school.gps_lat, school.gps_lon],
+        gps: [school.gps_x, school.gps_y],
         examScore: Math.random() * 100 // TODO: Calculate exam scores
     }});
 

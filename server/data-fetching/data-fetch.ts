@@ -1,5 +1,3 @@
-// Code generated with ChatGPT 4
-
 import * as xlsx from 'xlsx';
 import * as tmp from 'tmp';
 import * as https from 'https';
@@ -41,18 +39,18 @@ fetch(studentCountUrl)
           let prop = feature['properties'];
           let reg_nr: number = prop['Register'];
           let nosaukums: string = prop['Nosaukums'];
-          let gps_lat = feature['geometry']['coordinates'][0];
-          let gps_lon = feature['geometry']['coordinates'][1];
+          let gps_x = feature['geometry']['coordinates'][0];
+          let gps_y = feature['geometry']['coordinates'][1];
           if (schools.has(reg_nr)) {
             let existing = schools.get(reg_nr)!;
-            existing.gps_lat = gps_lat;
-            existing.gps_lon = gps_lon;
+            existing.gps_x = gps_x;
+            existing.gps_y = gps_y;
           } else {
             schools.set(reg_nr, {
               reg_nr: reg_nr,
               nosaukums: nosaukums,
-              gps_lat: gps_lat,
-              gps_lon: gps_lon
+              gps_x: gps_x,
+              gps_y: gps_y
             });
           }
         });

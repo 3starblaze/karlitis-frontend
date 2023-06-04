@@ -2,12 +2,13 @@ import { Model, Table, PrimaryKey, Column, DataType, AllowNull } from 'sequelize
 import { Optional } from 'sequelize';
 
 
+// We use the EPSG::3857 projection system for GPS coordinates
 interface SchoolData {
 	reg_nr: number,
 	nosaukums: string,
 	adrese?: string,
-	gps_lat?: number,
-	gps_lon?: number,
+	gps_x?: number,
+	gps_y?: number,
 	skolotaji?: number,
 	skolotaju_videja_alga?: number,
 	class_start_time?: number,
@@ -17,24 +18,9 @@ interface SchoolData {
 	website?: string
 };
 
-export type SchoolInput = Optional<SchoolData, 'adrese' | 'gps_lat' | 'gps_lon' | 'skolotaji' | 'skolotaju_videja_alga' |
+export type SchoolInput = Optional<SchoolData, 'adrese' | 'gps_x' | 'gps_y' | 'skolotaji' | 'skolotaju_videja_alga' |
 	'class_start_time' | 'class_end_time' | 'phone_number' | 'phone_number' | 'email' | 'website'>;
 type SchoolOutput = Required<SchoolData>;
-
-/*
-reg_nr: DataTypes.INT,
-  nosaukums: DataTypes.STRING,
-  adrese: DataTypes.STRING,
-  gps_lat: DataTypes.DECIMAL,
-  gps_lon: DataTypes.DECIMAL,
-  skolotaji: DataTypes.INT,
-  skolotaju_videja_alga: DataTypes.DECIMAL,
-  class_start_time: DataTypes.INT,
-  class_end_time: DataTypes.INT,
-  phone_number: DataTypes.STRING,
-  email: DataTypes.STRING,
-  website: DataTypes.STRING
-*/
 
 @Table({
 	tableName: 'schools',
@@ -53,12 +39,12 @@ export class School extends Model<SchoolData, SchoolInput>{
 	adrese!: string;
 
 	@AllowNull(true)
-	@Column(DataType.DECIMAL)
-	gps_lat!: number;
+	@Column(DataType.BIGINT)
+	gps_x!: number;
 
 	@AllowNull(true)
-	@Column(DataType.DECIMAL)
-	gps_lon!: number;
+	@Column(DataType.BIGINT)
+	gps_y!: number;
 
 	@AllowNull(true)
 	@Column(DataType.INTEGER)
