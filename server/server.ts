@@ -3,9 +3,11 @@ import { sequelize } from './sequelize_setup.js';
 import { StudentCount } from './models/student_count.js';
 import cors from 'cors';
 import { registerSchoolRoutes } from './routes/school.js';
+import bp from 'body-parser';
 const app = express();
 
 app.use(cors());
+app.use(bp.json())
 
 registerSchoolRoutes(app);
 

@@ -4,6 +4,7 @@ import { Menu, Select } from 'antd';
 import * as L from 'leaflet';
 import { useEffect, useState } from 'react';
 import '/node_modules/leaflet/dist/leaflet.css';
+import ExamForm from './ExamForm';
 
 function baseMenuItems() {
   const children = [
@@ -63,6 +64,7 @@ function schoolToPoint(school: any) {
 
 function App() {
   const [schools, setSchools] = useState<any[]>([]);
+  const [home, setHome] = useState<L.LatLng | null>(null);
 
   useEffect(() => {
     if (schools?.length !== 0) return;
@@ -109,6 +111,7 @@ function App() {
       <div className="flex flex-col lg:flex-row-reverse">
         <Map
           points={ schools.map(schoolToPoint) }
+		  home={ home }
         />
         <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
           <div className="fixed bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
@@ -125,6 +128,21 @@ function App() {
           <div className="m-4 p-4 border border-custom-blue shadow-md">
             <p>Hello there</p>
             <p>This is an example paragraph.</p>
+          </div>
+
+		  <div className="m-4 p-4 border border-custom-blue shadow-md">
+		  	<ExamForm onSubmit={(formData) => {
+				const response = fetch("http://localhost:6942/api/schools/nearby", {
+					method: 'POST',
+					headers: new Headers({'content-type': 'application/json'}),
+					body: JSON.stringify(formData)
+				})
+				.then((response) => response.json())
+				.then((data) => {
+					setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
+					setSchools(data.updatedSchoolList);
+				});
+			}}/>
           </div>
 
           <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">

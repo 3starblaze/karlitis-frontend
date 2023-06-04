@@ -4,7 +4,7 @@ import '/node_modules/leaflet/dist/leaflet.css';
 import proj4 from 'proj4';
 
 let map;
-function Map({ points }) {
+function Map({ points, home }) {
     useEffect(() => {
         // Example of how to turn EPSG:3857 (coords in data) into LatLng (coords used by leaflet) 
         const latLngCoord = proj4("EPSG:3857", "EPSG:4326", [2807409, 7682065]);
@@ -25,7 +25,16 @@ function Map({ points }) {
 
             point.bindPopup(`<p>${ pointData.name }</p>`);
             point.addTo(map);
-        })
+        });
+
+		if (home !== null) {
+			let point = L.marker(home);
+
+			point.bindPopup(`<p>Home</p>`);
+			point.addTo(map);
+
+			map.setView(home);
+		}
 
         test.addTo(map);
     });
