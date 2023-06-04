@@ -1,8 +1,10 @@
 # Karlitis
 
-1. Set up Docker
-2. Run `docker-compose up -d` from the source code folder
-3. To regenerate the postgres database, delete the postgresdata folder
+1. Set up Docker and install NodeJS 18
+2. Run `npm run docker` to launch the postgres server
+3. If you want to regenerate the postgres database, delete the postgresdata folder
+4. `npm run fetch-data` populates the datase with data
+5. `npm run modemon` launches the server
 
 # Getting Started with Create React App
 

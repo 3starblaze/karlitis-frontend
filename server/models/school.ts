@@ -1,24 +1,24 @@
-import { Model, Table, PrimaryKey, Column, DataType, HasMany } from 'sequelize-typescript';
+import { Model, Table, PrimaryKey, Column, DataType, AllowNull } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
-import { StudentCount } from './student_count.js';
 
 
-interface SchoolData{
+interface SchoolData {
 	reg_nr: number,
 	nosaukums: string,
-	adrese: string,
-	gps_lat: number,
-	gps_lon: number,
-	skolotaji: number,
-	skolotaju_videja_alga: number,
-	class_start_time: number,
-	class_end_time: number,
-	phone_number: string,
-	email: string,
-	website: string
+	adrese?: string,
+	gps_lat?: number,
+	gps_lon?: number,
+	skolotaji?: number,
+	skolotaju_videja_alga?: number,
+	class_start_time?: number,
+	class_end_time?: number,
+	phone_number?: string,
+	email?: string,
+	website?: string
 };
 
-type SchoolInput = Optional<SchoolData, never>;
+export type SchoolInput = Optional<SchoolData, 'adrese' | 'gps_lat' | 'gps_lon' | 'skolotaji' | 'skolotaju_videja_alga' |
+	'class_start_time' | 'class_end_time' | 'phone_number' | 'phone_number' | 'email' | 'website'>;
 type SchoolOutput = Required<SchoolData>;
 
 /*
@@ -37,46 +37,54 @@ reg_nr: DataTypes.INT,
 */
 
 @Table({
-	tableName: 'schools'
+	tableName: 'schools',
+	timestamps: false
 })
 export class School extends Model<SchoolData, SchoolInput>{
 	@PrimaryKey
-	@Column(DataType.INTEGER)
+	@Column(DataType.BIGINT)
 	reg_nr!: number;
 
 	@Column(DataType.STRING)
 	nosaukums!: string;
 
+	@AllowNull(true)
 	@Column(DataType.STRING)
 	adrese!: string;
-	
+
+	@AllowNull(true)
 	@Column(DataType.DECIMAL)
 	gps_lat!: number;
 
+	@AllowNull(true)
 	@Column(DataType.DECIMAL)
 	gps_lon!: number;
 
+	@AllowNull(true)
 	@Column(DataType.INTEGER)
 	skolotaji!: number;
 
+	@AllowNull(true)
 	@Column(DataType.DECIMAL)
 	skolotaju_videja_alga!: number;
-	
+
+	@AllowNull(true)
 	@Column(DataType.INTEGER)
 	class_start_time!: number;
-	
+
+	@AllowNull(true)
 	@Column(DataType.INTEGER)
 	class_end_time!: number;
-	
+
+	@AllowNull(true)
 	@Column(DataType.STRING)
 	phone_number!: string;
 
+	@AllowNull(true)
 	@Column(DataType.STRING)
 	email!: string;
 
+	@AllowNull(true)
 	@Column(DataType.STRING)
 	website!: string;
-
-	@HasMany(() => StudentCount, 'school')
-	studentCounts?: ReturnType<() => StudentCount>;
 };

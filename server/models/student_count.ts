@@ -48,7 +48,7 @@ export class StudentCount extends Model<StudentCountData, SchoolInput>{
 	date!: Date;
 
 	@ForeignKey(()=>School)
-	@Column
+	@Column(DataType.BIGINT)
 	school!: number
 
 	@Column

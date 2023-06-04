@@ -31,13 +31,14 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
+    "docker": "docker compose up -d",
     "start-server": "npx tsc --project ./server/tsconfig.json && node ./server/build/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "nodemon": "npx tsc --project ./server/tsconfig.json --watch & npx nodemon",
-    "student-count": "npx tsc --project ./server/tsconfig.json && node server/build/data-fetching/student-count"
+    "fetch-data": "npx tsc --project ./server/tsconfig.json && node server/build/data-fetching/data-fetch"
   },
   "eslintConfig": {
     "extends": [

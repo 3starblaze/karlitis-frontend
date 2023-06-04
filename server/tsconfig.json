@@ -9,7 +9,7 @@
 	},
 	"include": [
 		"./server.ts",
-		"./data-fetching/student-count.ts"
+		"./data-fetching/data-fetch.ts"
 	],
 	"exclude": [
 		"../node_modules/**",
