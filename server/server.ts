@@ -12,7 +12,13 @@ registerSchoolRoutes(app);
 app.get('/reklama', (req, res) => {
 	res.redirect('http://reklama.narvesen.lv');
 });
+
+
 app.use('/', express.static('./build'));
+
+app.use(function(req,res){
+    res.status(404).send('Kārlīti lūdzam neapcelt :) <br/> 404 <br/> <img src="http://reklama.narvesen.lv/berta2/liels/liels.gif"/>');
+});
 
 console.log("cau");
 console.log("Started at 3000");
