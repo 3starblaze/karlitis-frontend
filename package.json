@@ -23,8 +23,10 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.32.0",
     "sequelize-typescript": "^2.1.5",
+    "tmp": "^0.2.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start-server": "npx tsc --project ./server/tsconfig.json && node ./server/build/server.js",
@@ -32,7 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "nodemon": "npx tsc --project ./server/tsconfig.json --watch & npx nodemon"
+    "nodemon": "npx tsc --project ./server/tsconfig.json --watch & npx nodemon",
+    "student-count": "npx tsc --project ./server/tsconfig.json && node server/build/data-fetching/student-count"
   },
   "eslintConfig": {
     "extends": [

@@ -25,5 +25,4 @@ yarn-error.log*
 public/output.css
 
 server/build
-server/*.js
 src/data-fetching/*.js
