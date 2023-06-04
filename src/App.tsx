@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="bg-custom-white h-screen">
       <header
-        className="bg-[#213458] shadow-md p-4 flex items-center"
+        className="bg-custom-blue shadow-md p-4 flex items-center"
       >
         <a href="#">
           <img
@@ -87,12 +87,12 @@ function App() {
         <Map />
         <div className="flex flex-col lg:w-2/3 lg:h-screen">
           {/* Card */}
-          <div className="m-4 p-4 border border-blue-300 shadow-md">
+          <div className="m-4 p-4 border border-custom-blue shadow-md">
             <p>Hello there</p>
             <p>This is an example paragraph.</p>
           </div>
 
-          <div className="m-4 p-4 border border-blue-300 shadow-md flex flex-col">
+          <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">
             <p className="mb-2">
               Izvēlies skolu
             </p>
