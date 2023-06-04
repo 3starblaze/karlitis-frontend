@@ -85,6 +85,12 @@ function App() {
             <p className="pl-4">9.klase 89.92%</p>
             <p className="pl-4">12.klase 92.73%</p>
           </Dropdown>
+
+          {/* Card */}
+          <div className="m-4 p-4 border border-blue-300 shadow-md">
+            <p>Hello there</p>
+            <p>This is an example paragraph.</p>
+          </div>
         </div>
       </div>
     </div>
