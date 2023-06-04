@@ -23,11 +23,14 @@ fetch(studentCountUrl)
 
     const schools = new Map<number, SchoolInput>;
 
+    // First we populate schools with data from excell spreadsheet, and then overwrite them with data from skolu karte
     data.forEach(row => {
       let reg_nr = row['Iestādes reģistrācijas Nr.']
+      // Skip primary schools
+      if (row['Iestādes veids'] == 'Pirmsskolas izglītības iestāde') return;
       schools.set(reg_nr, {
         reg_nr: reg_nr,
-        nosaukums: row['Iestādes nosaukums']
+        nosaukums: row['Iestādes nosaukums'],
       });
     });
 
@@ -38,21 +41,17 @@ fetch(studentCountUrl)
         json['features'].map(feature => {
           let prop = feature['properties'];
           let reg_nr: number = prop['Register'];
-          let nosaukums: string = prop['Nosaukums'];
-          let gps_x = feature['geometry']['coordinates'][0];
-          let gps_y = feature['geometry']['coordinates'][1];
-          if (schools.has(reg_nr)) {
-            let existing = schools.get(reg_nr)!;
-            existing.gps_x = gps_x;
-            existing.gps_y = gps_y;
-          } else {
-            schools.set(reg_nr, {
-              reg_nr: reg_nr,
-              nosaukums: nosaukums,
-              gps_x: gps_x,
-              gps_y: gps_y
-            });
-          }
+          // Excell spreadsheet has newer data, so its school names should be preferred
+          let nosaukums: string = (schools.has(reg_nr)) ? schools.get(reg_nr)!.nosaukums : prop['Nosaukums'];
+          schools.set(reg_nr, {
+            reg_nr: reg_nr,
+            nosaukums: nosaukums,
+            adrese: prop['Adrese'],
+            skolotaju_videja_alga: prop['alga'],
+            skolotaji: prop['Skolotāju skaits'],
+            gps_x: feature['geometry']['coordinates'][0],
+            gps_y: feature['geometry']['coordinates'][1],
+          });
         });
       });
 
