@@ -1,17 +1,17 @@
 services:
-  karlitis:
-    container_name: karlitis
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/db
-      NODE_ENV: development
-      PORT: 4000
-    ports:
-      - "4000:4000"
+  # karlitis:
+  #   container_name: karlitis
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     DATABASE_URL: postgres://user:password@postgres:5432/db
+  #     NODE_ENV: development
+  #     PORT: 4000
+  #   ports:
+  #     - "4000:4000"
   postgres:
     container_name: postgres
     image: postgres:15.3

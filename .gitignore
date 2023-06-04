@@ -25,3 +25,4 @@ yarn-error.log*
 public/output.css
 
 server/build
+src/data-fetching/*.js

@@ -1,5 +1,6 @@
-import { Model, Table, PrimaryKey, Column, DataType } from 'sequelize-typescript';
+import { Model, Table, PrimaryKey, Column, DataType, HasMany } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
+import { StudentCount } from './student_count.js';
 
 
 interface SchoolData{
@@ -75,4 +76,7 @@ export class School extends Model<SchoolData, SchoolInput>{
 
 	@Column(DataType.STRING)
 	website!: string;
+
+	@HasMany(() => StudentCount, 'school')
+	studentCounts?: ReturnType<() => StudentCount>;
 };

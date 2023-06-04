@@ -4,6 +4,8 @@ import * as xlsx from 'xlsx';
 import * as tmp from 'tmp';
 import * as https from 'https';
 import * as fs from 'fs';
+import { Sequelize } from 'sequelize-typescript';
+import { School } from '../models/school.js';
 
 const studentCountUrl = "https://data.gov.lv/dati/dataset/9c8954d6-d8b7-4ebd-97cb-219b3bbc75d9/resource/fe40a325-e4d1-465e-a6e1-a63d675cc71b/download/izglitojamoskvispizglprogr_pa_iestadem_01122022.xlsx";
 const skoluKarteUrl = "https://izm.kartes.lv/api?action=layer&layer=skolas_2018.geojson";
@@ -18,11 +20,22 @@ function downloadFile(filePath: string, url: string): Promise<void> {
         resolve();
       });
       file.on('error', (err) => {
-        reject(err);
+        reject(err);  
       });
     });
   });
 };
+
+
+export const sequelize = new Sequelize({
+    database: 'db',
+    dialect: 'postgres',
+    username: 'user',
+    password: 'password',
+	models: [School], // or [Player, Team],
+  }); 
+
+console.log('Running student-count!');
 
 tmp.file((err, filePath, fd, cleanupCallback) => {
   return new Promise<void>((resolve, reject) => {
@@ -46,6 +59,7 @@ tmp.file((err, filePath, fd, cleanupCallback) => {
   });
 });
 
+/*
 https.get(skoluKarteUrl, (res) => {
   console.log(res);
-});
+});*/
