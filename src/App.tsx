@@ -8,15 +8,15 @@ import '/node_modules/leaflet/dist/leaflet.css';
 function baseMenuItems() {
   const children = [
     {
-      label: "Link 1",
+      label: "Meklēt",
       href: "#",
     },
     {
-      label: "Link 2",
+      label: "Par mums",
       href: "#",
     },
     {
-      label: "Link 3",
+      label: "Aktualitātes",
       href: "#",
     },
   ];
@@ -61,9 +61,9 @@ function App() {
 
         {/* links */}
         <ul className="hidden lg:flex lg:gap-4">
-          <li className="text-custom-white"><a href="#">Link 1</a></li>
-          <li className="text-custom-white"><a href="#">Link 2</a></li>
-          <li className="text-custom-white"><a href="#">Link 3</a></li>
+          <li className="text-custom-white"><a href="#">Meklēt</a></li>
+          <li className="text-custom-white"><a href="#">Par mums</a></li>
+          <li className="text-custom-white"><a href="#">Aktualitātes</a></li>
         </ul>
 
         <Menu
