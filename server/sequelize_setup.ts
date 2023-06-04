@@ -7,6 +7,7 @@ export const sequelize = new Sequelize({
     username: 'user',
     password: 'password',
 	models: [School, StudentCount], // or [Player, Team],
+    logging: false,
 }); 
 
 StudentCount.removeAttribute('id');

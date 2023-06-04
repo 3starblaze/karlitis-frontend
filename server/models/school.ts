@@ -2,15 +2,15 @@ import { Model, Table, PrimaryKey, Column, DataType, AllowNull } from 'sequelize
 import { Optional } from 'sequelize';
 
 
-// We use the EPSG::3857 projection system for GPS coordinates
 interface SchoolData {
 	reg_nr: number,
 	nosaukums: string,
 	adrese?: string,
+	// We use the EPSG::3857 projection system for GPS coordinates
 	gps_x?: number,
 	gps_y?: number,
 	skolotaji?: number,
-	skolotaju_videja_alga?: number,
+	skolotaju_videja_alga?: number, // in EUR
 	class_start_time?: number,
 	class_end_time?: number,
 	phone_number?: string,
@@ -24,7 +24,7 @@ type SchoolOutput = Required<SchoolData>;
 
 @Table({
 	tableName: 'schools',
-	timestamps: false
+	timestamps: false,
 })
 export class School extends Model<SchoolData, SchoolInput>{
 	@PrimaryKey
