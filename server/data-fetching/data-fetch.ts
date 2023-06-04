@@ -8,9 +8,9 @@ import { StudentCount, StudentCountInput } from '../models/student_count.js';
 import { CentralizetieEksameni, CentralizetieEksameniInput } from '../models/centralizetie_eksameni.js';
 import { buffer } from 'stream/consumers';
 
-function numberOrUndefined(text: string): number | undefined {
+function numberOrUndefined(text: string): number | null {
   let n = parseInt(text)
-  if (isNaN(n)) return undefined;
+  if (isNaN(n)) return null;
   return n;
 }
 
