@@ -1,18 +1,77 @@
 import './App.css';
 import Dropdown from  './Dropdown';
 import Map from './Map';
+import { Menu } from 'antd';
 import * as L from 'leaflet';
 import '/node_modules/leaflet/dist/leaflet.css';
+
+function baseMenuItems() {
+  const children = [
+    {
+      label: "Link 1",
+      href: "#",
+    },
+    {
+      label: "Link 2",
+      href: "#",
+    },
+    {
+      label: "Link 3",
+      href: "#",
+    },
+  ];
+
+  return children.map((obj: any) => {
+    obj['key'] = obj['label'];
+    return obj;
+  });
+}
+
+function menuItems() {
+  let children = baseMenuItems();
+  children = children.map((obj) => {
+    delete obj['href'];
+    return obj;
+  });
+
+  return [{
+    label: '',
+    key: 'menu',
+    children: children,
+  }];
+}
+
 
 function App() {
   return (
     <div className="bg-gray-100 h-screen">
-      <header className="bg-[#213458] shadow p-4">
-        <img
-          src="/karlitis_logo-karlitis.png"
-          className="h-5"
-          alt="Karlitis logo"
+      <header
+        className="bg-[#213458] shadow p-4 flex items-center"
+      >
+        <a href="#">
+          <img
+            src="/karlitis_logo-karlitis.png"
+            className="h-5"
+            alt="Karlitis logo"
+          />
+        </a>
+
+        {/* Empty space in between */}
+        <div className="flex-grow"></div>
+
+        {/* links */}
+        <ul className="hidden lg:flex lg:gap-4">
+          <li className="text-white"><a href="#">Link 1</a></li>
+          <li className="text-white"><a href="#">Link 2</a></li>
+          <li className="text-white"><a href="#">Link 3</a></li>
+        </ul>
+
+        <Menu
+          className="lg:hidden"
+          mode="vertical"
+          items={ menuItems() }
         />
+
       </header>
 
 
