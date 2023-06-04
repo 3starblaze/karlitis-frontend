@@ -4,7 +4,7 @@ import '/node_modules/leaflet/dist/leaflet.css';
 import proj4 from 'proj4';
 
 let map;
-function Map() {
+function Map({ points }) {
     useEffect(() => {
         // Example of how to turn EPSG:3857 (coords in data) into LatLng (coords used by leaflet) 
         const latLngCoord = proj4("EPSG:3857", "EPSG:4326", [2807409, 7682065]);
@@ -16,8 +16,17 @@ function Map() {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
 
-        let point = L.marker(flippedCoord);
-        point.addTo(map);
+        points.forEach((pointData) => {
+            if (pointData === null) return;
+
+            const latLngCoord = proj4("EPSG:3857", "EPSG:4326", pointData.latLng);
+            const flippedCoord = [latLngCoord[1], latLngCoord[0]];
+            let point = L.marker(flippedCoord);
+
+            point.bindPopup(`<p>${ pointData.name }</p>`);
+            point.addTo(map);
+        })
+
         test.addTo(map);
     });
     return (

@@ -50,6 +50,16 @@ function schoolSelectOptions() {
   }));
 }
 
+function schoolToPoint(school: any) {
+  const coords = school.gps;
+  coords[0] = Number(coords[0]);
+  coords[1] = Number(coords[1]);
+
+  return {
+    latLng: coords,
+    name: school.name,
+  };
+}
 
 function App() {
   const [schools, setSchools] = useState<any[]>([]);
@@ -97,7 +107,9 @@ function App() {
 
 
       <div className="flex flex-col lg:flex-row-reverse">
-        <Map />
+        <Map
+          points={ schools.map(schoolToPoint) }
+        />
         <div className="flex flex-col lg:w-2/3 lg:h-screen overflow-scroll">
           <div className="fixed bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
             { schools?.length } rezultāti
