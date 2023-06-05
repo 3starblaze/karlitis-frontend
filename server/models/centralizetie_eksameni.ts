@@ -46,12 +46,13 @@ export type CentralizetieEksameniOutput = Required<CentralizetieEksameniData>;
 export class CentralizetieEksameni extends Model<CentralizetieEksameniData, CentralizetieEksameniInput>{
 	@ForeignKey(() => School)
 	@Column(DataType.BIGINT)
-	school: bigint;
+	school: number;
 
 	@Column(DataType.INTEGER)
 	year: number;
 
 	@Default(false)
+	@AllowNull(false)
 	@Column(DataType.BOOLEAN)
 	optimal_level: boolean | null;
 

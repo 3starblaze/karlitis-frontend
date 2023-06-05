@@ -131,7 +131,7 @@ fetch(studentCountUrl)
           } else {
             let tips: string = row['Centralizētais eksāmens'];
             if (examDataPerSchool[schoolId] == undefined) examDataPerSchool[schoolId] = {};
-            examDataPerSchool[schoolId].tips = row['vidējais vērtējums'];
+            examDataPerSchool[schoolId][tips] = row['vidējais vērtējums'];
           }
         });
 
@@ -154,7 +154,7 @@ fetch(studentCountUrl)
           }, {
             school: schoolId,
             year: year,
-            optimal_level: true,
+          optimal_level: true,
             anglu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens angļu valodā 12.klasē'],
             francu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens franču valodā optimālajā līmenī'],
             vacu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens vācu valodā optimālajā līmenī'],
