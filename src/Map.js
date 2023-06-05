@@ -4,12 +4,15 @@ import '/node_modules/leaflet/dist/leaflet.css';
 import proj4 from 'proj4';
 
 let map;
+let markers = L.layerGroup();
 function Map({ points, home }) {
     useEffect(() => {
         // Example of how to turn EPSG:3857 (coords in data) into LatLng (coords used by leaflet) 
         const latLngCoord = proj4("EPSG:3857", "EPSG:4326", [2807409, 7682065]);
         const flippedCoord = [latLngCoord[1], latLngCoord[0]];
         if(!map) map = L.map('map').setView(flippedCoord, 13);
+
+		markers.clearLayers();
 
         let test = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -24,18 +27,19 @@ function Map({ points, home }) {
             let point = L.marker(flippedCoord);
 
             point.bindPopup(`<p>${ pointData.name }</p>`);
-            point.addTo(map);
+            point.addTo(markers);
         });
 
 		if (home !== null) {
 			let point = L.marker(home);
 
 			point.bindPopup(`<p>Home</p>`);
-			point.addTo(map);
+			point.addTo(markers);
 
 			map.setView(home);
 		}
 
+		markers.addTo(map);
         test.addTo(map);
     });
     return (
