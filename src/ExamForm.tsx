@@ -10,38 +10,41 @@ interface ExamFormData {
 function ExamForm() {
 
 	return (<form id="examForm" action="/" method="GET">
-		<label htmlFor="address">Adrese:</label> <input type="text" name="address"/> <br/><br/>
-		Kuri centralizētie eksāmeni tev interesē?
-		<hr/>
-		<input type="checkbox" id="matematika" name="matematika" value="True"/>
-		<label htmlFor="matematika"> Matemātika</label><br/>
+		<p className="text-2xl">Kāda ir jūsu dzīvesvietas adresse?</p>
+		<input type="text" name="address" placeholder="aptuveni" className="border-2 border-custom-blue rounded-lg w-full h-10 px-4 my-4" /> <br /><br />
 
-		<input type="checkbox" id="latv_val" name="latv_val" value="True"/>
-		<label htmlFor="latv_val"> Latviešu Valoda</label><br/>
+		<p className="text-2xl">Kādi priekšmeti jums interesē?</p>
+		<hr />
+		<br />
+		<input type="checkbox" id="matematika" name="matematika" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="matematika" className="text-xl"> Matemātika</label><br />
 
-		<input type="checkbox" id="anglu_val" name="anglu_val" value="True"/>
-		<label htmlFor="anglu_val"> Angļu Valoda</label><br/>
+		<input type="checkbox" id="latv_val" name="latv_val" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="latv_val" className="text-xl"> Latviešu Valoda</label><br />
 
-		<input type="checkbox" id="francu_val" name="francu_val" value="True"/>
-		<label htmlFor="francu_val"> Franču Valoda</label><br/>
+		<input type="checkbox" id="anglu_val" name="anglu_val" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="anglu_val" className="text-xl"> Angļu Valoda</label><br />
 
-		<input type="checkbox" id="krievu_val" name="krievu_val" value="True"/>
-		<label htmlFor="krievu_val"> Krievu Valoda</label><br/>
+		<input type="checkbox" id="francu_val" name="francu_val" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="francu_val" className="text-xl"> Franču Valoda</label><br />
 
-		<input type="checkbox" id="vacu_val" name="vacu_val" value="True"/>
-		<label htmlFor="vacu_val"> Vācu Valoda</label><br/>
+		<input type="checkbox" id="krievu_val" name="krievu_val" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="krievu_val" className="text-xl"> Krievu Valoda</label><br />
 
-		<input type="checkbox" id="biologija" name="biologija" value="True"/>
-		<label htmlFor="biologija"> Bioloģija</label><br/>
+		<input type="checkbox" id="vacu_val" name="vacu_val" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="vacu_val" className="text-xl"> Vācu Valoda</label><br />
 
-		<input type="checkbox" id="fizika" name="fizika" value="True"/>
-		<label htmlFor="fizika"> Fizika</label><br/>
+		<input type="checkbox" id="biologija" name="biologija" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="biologija" className="text-xl"> Bioloģija</label><br />
 
-		<input type="checkbox" id="kimija" name="kimija" value="True"/>
-		<label htmlFor="kimija"> Ķīmija</label><br/>
+		<input type="checkbox" id="fizika" name="fizika" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="fizika" className="text-xl"> Fizika</label><br />
 
-		<input type="checkbox" id="vesture" name="vesture" value="True"/>
-		<label htmlFor="vesture"> Vēsture</label><br/><br/>
+		<input type="checkbox" id="kimija" name="kimija" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="kimija" className="text-xl"> Ķīmija</label><br />
+
+		<input type="checkbox" id="vesture" name="vesture" value="True" className="w-6 h-6 mx-2 my-2" />
+		<label htmlFor="vesture" className="text-xl"> Vēsture</label><br /><br />
 
 		{/* <button onClick={(e) => {
 			e.preventDefault();
@@ -66,7 +69,9 @@ function ExamForm() {
 			props.onSubmit.call(null, formData);
 		}}>Atlasīt</button> */}
 
-		<input type="submit" value="Atlasīt"></input>
+		<div className="flex justify-center">
+			<button type="submit" className="rounded-lg p-6 w-64 bg-custom-blue text-white text-xl">Atlasīt</button>
+		</div>
 	</form>)
 }
 
