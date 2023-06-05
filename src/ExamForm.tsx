@@ -3,13 +3,13 @@ interface ExamFormData {
 	checkedExams: string[];
 }
 
-interface ExamFormProps {
-	onSubmit: (data: ExamFormData) => void;
-}
+// interface ExamFormProps {
+// 	onSubmit: (data: ExamFormData) => void;
+// }
 
-function ExamForm(props: ExamFormProps) {
+function ExamForm() {
 
-	return (<form id="examForm">
+	return (<form id="examForm" action="/" method="GET">
 		<label htmlFor="address">Adrese:</label> <input type="text" name="address"/> <br/><br/>
 		Kuri centralizētie eksāmeni tev interesē?
 		<hr/>
@@ -43,7 +43,7 @@ function ExamForm(props: ExamFormProps) {
 		<input type="checkbox" id="vesture" name="vesture" value="True"/>
 		<label htmlFor="vesture"> Vēsture</label><br/><br/>
 
-		<button onClick={(e) => {
+		{/* <button onClick={(e) => {
 			e.preventDefault();
 			const dataRaw = new FormData(document.getElementById('examForm')! as HTMLFormElement);
 			let formData: ExamFormData = {
@@ -64,7 +64,9 @@ function ExamForm(props: ExamFormProps) {
 
 			console.log(formData);
 			props.onSubmit.call(null, formData);
-		}}>Atlasīt</button>
+		}}>Atlasīt</button> */}
+
+		<input type="submit" value="Atlasīt"></input>
 	</form>)
 }
 

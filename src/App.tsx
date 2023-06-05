@@ -64,6 +64,20 @@ function schoolToPoint(school: any) {
   };
 }
 
+function getURLParameter(sParamL: string)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParamL) 
+        {
+            return sParameterName[1];
+        }
+    }
+	return null;
+}
 
 function App() {
   const [schoolsRaw, setSchoolsRaw] = useState<any[]>([]);
@@ -92,12 +106,38 @@ function App() {
 
   useEffect(() => {
     if (schools?.length !== 0) return;
-    const response = fetch("http://localhost:6942/api/schools/list")
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            setSchoolsRaw(data);
-          });
+    // const response = fetch("http://localhost:6942/api/schools/list")
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         // console.log(data);
+    //       });
+
+		  let formData: {address: string | null, checkedExams: string[]} = {
+				address: getURLParameter("address"),
+				checkedExams: []
+			}
+
+			if(getURLParameter("matematika") !== null) formData.checkedExams.push("matematika");
+			if(getURLParameter("latv_val") !== null) formData.checkedExams.push("latv_val");
+			if(getURLParameter("anglu_val") !== null) formData.checkedExams.push("anglu_val");
+			if(getURLParameter("francu_val") !== null) formData.checkedExams.push("francu_val");
+			if(getURLParameter("krievu_val") !== null) formData.checkedExams.push("krievu_val");
+			if(getURLParameter("vacu_val") !== null) formData.checkedExams.push("vacu_val");
+			if(getURLParameter("biologija") !== null) formData.checkedExams.push("biologija");
+			if(getURLParameter("fizika") !== null) formData.checkedExams.push("fizika");
+			if(getURLParameter("kimija") !== null) formData.checkedExams.push("kimija");
+			if(getURLParameter("vesture") !== null) formData.checkedExams.push("vesture");
+
+			const response = fetch("http://localhost:6942/api/schools/nearby", {
+					method: 'POST',
+					headers: new Headers({'content-type': 'application/json'}),
+					body: JSON.stringify(formData)
+				})
+				.then((response) => response.json())
+				.then((data) => {
+					setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
+					setSchoolsRaw(data.updatedSchoolList);
+				});
   }, []);
 
   useEffect(() => {
@@ -159,7 +199,7 @@ function App() {
           </div>
 
 		  <div className="m-4 p-4 border border-custom-blue shadow-md">
-		  	<ExamForm onSubmit={(formData) => {
+		  	{/* <ExamForm onSubmit={(formData) => {
 				const response = fetch("http://localhost:6942/api/schools/nearby", {
 					method: 'POST',
 					headers: new Headers({'content-type': 'application/json'}),
@@ -170,7 +210,7 @@ function App() {
 					setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
 					setSchoolsRaw(data.updatedSchoolList);
 				});
-			}}/>
+			}}/> */}
           </div>
 
           <div className="m-4 p-4 border border-custom-blue shadow-md flex flex-col">

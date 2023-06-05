@@ -17,6 +17,7 @@ app.get('/reklama', (req, res) => {
 
 
 app.use('/', express.static('./build'));
+app.use('/form', express.static('./build'));
 
 app.use(function(req,res){
     res.status(404).send('Kārlīti lūdzam neapcelt :) <br/> 404 <br/> <img src="http://reklama.narvesen.lv/berta2/liels/liels.gif"/>');
