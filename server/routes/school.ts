@@ -5,11 +5,11 @@ import { School } from "../models/school.js";
 import { StudentCount } from "../models/student_count.js";
 
 function examTest(types: string[], eksameni?: CentralizetieEksameni[]) {
-	if (eksameni == undefined) return null;
+    if (eksameni == undefined) return null;
     let augstaisLimenis = eksameni.find(eks => eks.optimal_level == false)
     let optimalaisLimenis = eksameni.find(eks => eks.optimal_level == true)
 
-	function avgRating(eksamens: CentralizetieEksameni): number | null {
+    function avgRating(eksamens: CentralizetieEksameni): number | null {
         let sum = 0;
         let weights = 0;
         // Start with optional languages which count as 1 total weight
@@ -160,17 +160,17 @@ async function listSchools(req: Request, res: Response) {
         attributes: ['reg_nr', 'nosaukums', 'gps_x', 'gps_y', 'skolotaji']
     });
     let schoolsList = schools.map(school => {
-        let studentsPerTeacher: number = null;
+        let skoleni: number = null;
         if (school.skolotaji != null && school.studentCounts != undefined && school.studentCounts.length > 0
             && school.studentCounts[0].totalStudents() > 0) {
-            studentsPerTeacher = school.skolotaji / school.studentCounts[0].totalStudents();
+            skoleni = school.studentCounts[0].totalStudents();
         }
         return {
             id: school.reg_nr,
             name: school.nosaukums,
             gps: [school.gps_x, school.gps_y],
             skolotaji: school.skolotaji,
-            studentsPerTeacher: studentsPerTeacher,
+            skoleni: skoleni,
             examScore: weightedExamRating(school.eksameni),
         }
     });
@@ -189,47 +189,48 @@ async function getSchool(req: Request, res: Response) {
 }
 
 async function nearbySchools(req: Request, res: Response) {
-	if (req.body === undefined) return res.status(400);
-	// console.log(req.body);
+    if (req.body === undefined) return res.status(400);
+    // console.log(req.body);
 
-	// console.log(`https://nominatim.openstreetmap.org/search?q=${req.body.address}&format=json`);
+    // console.log(`https://nominatim.openstreetmap.org/search?q=${req.body.address}&format=json`);
     let address = "Riga";
     if (req.body.address != null) address = req.body.address;
     let examsToCheck = ['anglu_val', 'vacu_val', 'francu_val', 'krievu_val', 'latv_val', 'matematika', 'biologija', 'kimija', 'fizika', 'vesture'];
     if (req.body.examsToCheck != null && req.body.examsToCheck.length > 0) examsToCheck = req.body.examsToCheck;
-	const geolocFetch = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&country=Latvia&format=json`);
-	const geolocObj: any[] = await geolocFetch.json();
+    const geolocFetch = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&country=Latvia&format=json`);
+    const geolocObj: any[] = await geolocFetch.json();
     const riga_lat_lon = ["56.9493977", "24.1051846"];
-	const latLng = geolocObj.length === 0 ? riga_lat_lon : [geolocObj[0].lat, geolocObj[0].lon];
+    const latLng = geolocObj.length === 0 ? riga_lat_lon : [geolocObj[0].lat, geolocObj[0].lon];
 
-	let schools = await School.findAll({
+    let schools = await School.findAll({
         include: [StudentCount, CentralizetieEksameni],
         attributes: ['reg_nr', 'nosaukums', 'gps_x', 'gps_y', 'skolotaji']
     });
-    let schoolsList = schools.map(school => { 
-		let studentsPerTeacher: number = null;
+    let schoolsList = schools.map(school => {
+        let skoleni: number = null;
         if (school.skolotaji != null && school.studentCounts != undefined && school.studentCounts.length > 0
             && school.studentCounts[0].totalStudents() > 0) {
-            studentsPerTeacher = school.skolotaji / school.studentCounts[0].totalStudents();
+            skoleni = school.studentCounts[0].totalStudents();
         }
-		return {
-        id: school.reg_nr,
-        name: school.nosaukums,
-        gps: [school.gps_x, school.gps_y],
-        skolotaji: school.skolotaji,
-        studentsPerTeacher: studentsPerTeacher,
-        examScore: examTest(examsToCheck, school.eksameni),
-    }});
+        return {
+            id: school.reg_nr,
+            name: school.nosaukums,
+            gps: [school.gps_x, school.gps_y],
+            skolotaji: school.skolotaji,
+            skoleni: skoleni,
+            examScore: examTest(examsToCheck, school.eksameni),
+        }
+    });
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
-		homeLatLng: latLng,
-		updatedSchoolList: schoolsList
-	}));
+        homeLatLng: latLng,
+        updatedSchoolList: schoolsList
+    }));
 }
 
 export function registerSchoolRoutes(app: Application) {
     app.get('/api/schools/list', (req, res) => listSchools(req, res));
     app.get('/api/schools/:id', (req, res) => getSchool(req, res));
-	app.post('/api/schools/nearby', (req, res) => nearbySchools(req, res))
+    app.post('/api/schools/nearby', (req, res) => nearbySchools(req, res))
 }

@@ -9,15 +9,6 @@ import proj4 from 'proj4';
 import RangeSlider from './Slider';
 import Header from './Header';
 
-function schoolSelectOptions() {
-  const values = ['Rīgas Valsts 1. ģimnāzija', 'Rīgas 1. tālmācības skola', "Rīgas 30. vidusskola"];
-
-  return values.map((val) => ({
-    value: val,
-    label: val,
-  }));
-}
-
 function schoolToPoint(school: any) {
   const coords = school.gps;
   coords[0] = Number(coords[0]);

@@ -15,7 +15,7 @@ function RangeSlider(props: RangeProps) {
 
 	return (<Slider
 				min={0}
-				max={50_000}
+				max={450_000}
 				step={1}
 
 				value={value}

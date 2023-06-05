@@ -10,6 +10,7 @@ import RangeSlider from './Slider';
 import Fuse from 'fuse.js';
 import { School } from '../server/models/school';
 import Header from './Header';
+import StudentTeacherCount from './StudentTeacherCount';
 
 const fuseOptions = {
   keys: ['name']
@@ -158,6 +159,8 @@ function App() {
                   {val.examScore != null ? <p className="p-4">
                     Centralā eksāmena rezultāts: <span className="text-xl">{val.examScore.toFixed(1)} / 100</span>
                   </p> : <p>Centralizēto eksāmenu rezultāti trūkst.</p>}
+
+                  <StudentTeacherCount studentCount={val.skoleni} teacherCount={val.skolotaji} />
 
                 </li>
               ))

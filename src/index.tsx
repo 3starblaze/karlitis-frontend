@@ -6,15 +6,20 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Form from './Form';
+import SchoolPage from './SchoolPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
   },
   {
-	path: "/form",
-	element: <Form/>
+    path: "/form",
+    element: <Form />
+  },
+  {
+    path: "/school",
+    element: <SchoolPage />
   }
 ]);
 
@@ -23,7 +28,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

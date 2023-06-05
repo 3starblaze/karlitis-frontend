@@ -154,8 +154,8 @@ fetch(studentCountUrl)
           }, {
             school: schoolId,
             year: year,
-          optimal_level: true,
-            anglu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens angļu valodā 12.klasē'],
+            optimal_level: true,
+            anglu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens angļu valodā optimālajā līmenī'],
             francu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens franču valodā optimālajā līmenī'],
             vacu_val: examDataPerSchool[schoolId]['Centralizētais eksāmens vācu valodā optimālajā līmenī'],
             latv_val: examDataPerSchool[schoolId]['Centralizētais eksāmens latviešu valodā optimālajā līmenī'],
