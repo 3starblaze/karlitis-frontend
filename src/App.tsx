@@ -50,15 +50,6 @@ function menuItems() {
   }];
 }
 
-function schoolSelectOptions() {
-  const values = ['Rīgas Valsts 1. ģimnāzija', 'Rīgas 1. tālmācības skola', "Rīgas 30. vidusskola"];
-
-  return values.map((val) => ({
-    value: val,
-    label: val,
-  }));
-}
-
 function schoolToPoint(school: any) {
   const coords = school.gps;
   coords[0] = Number(coords[0]);
@@ -198,13 +189,21 @@ function App() {
         />
         <div className="flex flex-col lg:w-2/3 lg:h-screen">
           <div className="sticky bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
-            <Input placeholder="meklēt" onChange={e => setSearchQuery(e.target.value)} style={{ width: 200 }} /> {schools?.length} rezultāti
+
+            <a href="/form" className="bg-blue-400 rounded-lg text-white p-4 mr-4">Pielāgot meklēšanas kritērijus</a>
+
+            <Input placeholder="meklēt" onChange={e => setSearchQuery(e.target.value)} className="w-60 h-12" />
             <div>
-              <p className="mb-2">
-                Maksimālais attālums
-              </p>
+
 
               <RangeSlider value={maxDist} callback={(val) => setMaxDist(val)} />
+              <div className="columns-2">
+                <p className="mb-2 text-left">
+                  Maksimālais attālums: {maxDist / 1000} km
+                </p>
+                <p className="mb-2 text-right">Rezultāti: {schools.length}</p>
+              </div>
+
             </div>
           </div>
 
