@@ -135,7 +135,7 @@ function App() {
 				})
 				.then((response) => response.json())
 				.then((data) => {
-					setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
+					if(getURLParameter("address") !== "") setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
 					setSchoolsRaw(data.updatedSchoolList);
 				});
   }, []);
