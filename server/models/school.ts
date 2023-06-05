@@ -80,5 +80,5 @@ export class School extends Model<SchoolData, SchoolInput>{
 	studentCounts?: ReturnType<() => StudentCount[]> | null;
 
 	@HasMany(() => CentralizetieEksameni, 'school')
-	CEx?: ReturnType<() => CentralizetieEksameni[]> | null;
+	eksameni?: ReturnType<() => CentralizetieEksameni[]> | null;
 };
