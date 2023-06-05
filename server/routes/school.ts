@@ -199,7 +199,8 @@ async function nearbySchools(req: Request, res: Response) {
     if (req.body.examsToCheck != null && req.body.examsToCheck.length > 0) examsToCheck = req.body.examsToCheck;
 	const geolocFetch = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&country=Latvia&format=json`);
 	const geolocObj: any[] = await geolocFetch.json();
-	const latLng = geolocObj.length === 0 ? null : [geolocObj[0].lat, geolocObj[0].lon];
+    const riga_lat_lon = ["56.9493977", "24.1051846"];
+	const latLng = geolocObj.length === 0 ? riga_lat_lon : [geolocObj[0].lat, geolocObj[0].lon];
 
 	let schools = await School.findAll({
         include: [StudentCount, CentralizetieEksameni],
