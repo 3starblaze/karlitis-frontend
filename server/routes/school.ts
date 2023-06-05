@@ -61,10 +61,9 @@ function examTest(types: string[], eksameni?: CentralizetieEksameni[]) {
         }
 
         if (weights == 0) {
-            console.log("BRUH HOW");
+            console.warn("Exam row contained no exam scores!");
             return null;
         }
-        console.log(`Nice! ${sum / weights}`);
         return sum / weights;
     }
 
@@ -138,10 +137,8 @@ function weightedExamRating(eksameni?: CentralizetieEksameni[]): number | null {
         }
 
         if (weights == 0) {
-            console.log("BRUH HOW");
             return null;
         }
-        console.log(`Nice! ${sum / weights}`);
         return sum / weights;
     }
 
@@ -196,7 +193,11 @@ async function nearbySchools(req: Request, res: Response) {
 	// console.log(req.body);
 
 	// console.log(`https://nominatim.openstreetmap.org/search?q=${req.body.address}&format=json`);
-	const geolocFetch = await fetch(`https://nominatim.openstreetmap.org/search?q=${req.body.address}&country=Latvia&format=json`);
+    let address = "Riga";
+    if (req.body.address != null) address = req.body.address;
+    let examsToCheck = ['anglu_val', 'vacu_val', 'francu_val', 'krievu_val', 'latv_val', 'matematika', 'biologija', 'kimija', 'fizika', 'vesture'];
+    if (req.body.examsToCheck != null && req.body.examsToCheck.length > 0) examsToCheck = req.body.examsToCheck;
+	const geolocFetch = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&country=Latvia&format=json`);
 	const geolocObj: any[] = await geolocFetch.json();
 	const latLng = geolocObj.length === 0 ? null : [geolocObj[0].lat, geolocObj[0].lon];
 
@@ -216,7 +217,7 @@ async function nearbySchools(req: Request, res: Response) {
         gps: [school.gps_x, school.gps_y],
         skolotaji: school.skolotaji,
         studentsPerTeacher: studentsPerTeacher,
-        examScore: examTest(req.body.checkedExams, school.eksameni),
+        examScore: examTest(examsToCheck, school.eksameni),
     }});
 
     res.setHeader('Content-Type', 'application/json');

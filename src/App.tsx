@@ -8,6 +8,11 @@ import ExamForm from './ExamForm';
 import proj4 from 'proj4';
 import RangeSlider from './Slider';
 import Fuse from 'fuse.js';
+import { School } from '../server/models/school';
+
+const fuseOptions = {
+  keys: ['name']
+};
 
 function baseMenuItems() {
   const children = [
@@ -78,22 +83,20 @@ function getURLParameter(sParamL: string) {
 }
 
 function App() {
-  const [schoolsRaw, setSchoolsRaw] = useState<any[]>([]);
+  class RawSchools {
+    data: any[];
+    fuse: Fuse<any[]>;
+
+    constructor(data: any[]) {
+      this.data = data;
+      this.fuse = new Fuse(data, fuseOptions);
+    }
+  }
+  const [rawSchools, setRawSchools] = useState<RawSchools>(new RawSchools([]));
   const [schools, setSchools] = useState<any[]>([]);
   const [home, setHome] = useState<L.LatLng | null>(null);
   const [maxDist, setMaxDist] = useState<number>(50_000);
-  const fuseOptions = {
-    keys: ['name']
-  };
-  const [fuse, setFuse] = useState<Fuse<any[]> | null>(null);
-
-  function onSearch(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-    let results = schoolsRaw;
-    if (e.target.value !== "")
-      results = fuse!.search(e.target.value).map(res => res.item);
-
-    setSchools(results);
-  };
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   function checkDistance(school: any) {
     const p = schoolToPoint(school);
@@ -115,27 +118,22 @@ function App() {
 
   useEffect(() => {
     if (schools?.length !== 0) return;
-    // const response = fetch("http://localhost:6942/api/schools/list")
-    //       .then((response) => response.json())
-    //       .then((data) => {
-    //         // console.log(data);
-    //       });
 
-    let formData: { address: string | null, checkedExams: string[] } = {
+    let formData: { address: string | null, examsToCheck: string[] } = {
       address: getURLParameter("address"),
-      checkedExams: []
+      examsToCheck: []
     }
 
-    if (getURLParameter("matematika") !== null) formData.checkedExams.push("matematika");
-    if (getURLParameter("latv_val") !== null) formData.checkedExams.push("latv_val");
-    if (getURLParameter("anglu_val") !== null) formData.checkedExams.push("anglu_val");
-    if (getURLParameter("francu_val") !== null) formData.checkedExams.push("francu_val");
-    if (getURLParameter("krievu_val") !== null) formData.checkedExams.push("krievu_val");
-    if (getURLParameter("vacu_val") !== null) formData.checkedExams.push("vacu_val");
-    if (getURLParameter("biologija") !== null) formData.checkedExams.push("biologija");
-    if (getURLParameter("fizika") !== null) formData.checkedExams.push("fizika");
-    if (getURLParameter("kimija") !== null) formData.checkedExams.push("kimija");
-    if (getURLParameter("vesture") !== null) formData.checkedExams.push("vesture");
+    if (getURLParameter("matematika") !== null) formData.examsToCheck.push("matematika");
+    if (getURLParameter("latv_val") !== null) formData.examsToCheck.push("latv_val");
+    if (getURLParameter("anglu_val") !== null) formData.examsToCheck.push("anglu_val");
+    if (getURLParameter("francu_val") !== null) formData.examsToCheck.push("francu_val");
+    if (getURLParameter("krievu_val") !== null) formData.examsToCheck.push("krievu_val");
+    if (getURLParameter("vacu_val") !== null) formData.examsToCheck.push("vacu_val");
+    if (getURLParameter("biologija") !== null) formData.examsToCheck.push("biologija");
+    if (getURLParameter("fizika") !== null) formData.examsToCheck.push("fizika");
+    if (getURLParameter("kimija") !== null) formData.examsToCheck.push("kimija");
+    if (getURLParameter("vesture") !== null) formData.examsToCheck.push("vesture");
 
     const response = fetch("http://localhost:6942/api/schools/nearby", {
       method: 'POST',
@@ -145,14 +143,21 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         if (getURLParameter("address") !== "") setHome(data.homeLatLang === null ? null : L.latLng([parseFloat(data.homeLatLng[0]), parseFloat(data.homeLatLng[1])]));
-        setSchoolsRaw(data.updatedSchoolList);
-        setFuse(new Fuse(data, fuseOptions));
+        setRawSchools(new RawSchools(data.updatedSchoolList));
       });
   }, []);
 
   useEffect(() => {
-    setSchools(schoolsRaw.filter((val) => home === null ? true : checkDistance(val)).sort((a, b) => home === null ? a.examScore - b.examScore : getDistance(a) - getDistance(b)))
-  }, [schoolsRaw, home, maxDist]);
+    let queriedSchools: any[] = rawSchools.data;
+    if (searchQuery !== "") {
+      queriedSchools = rawSchools.fuse.search(searchQuery).map(res => res.item as any);
+    }
+
+    let newSchools = queriedSchools
+      .filter((val) => home === null ? true : checkDistance(val))
+      .sort((a, b) => home === null ? b.examScore - a.examScore : getDistance(a) - getDistance(b));
+    setSchools(newSchools);
+  }, [rawSchools, home, maxDist, searchQuery]);
 
   return (
     <div className="bg-custom-white h-full">
@@ -193,7 +198,7 @@ function App() {
         />
         <div className="flex flex-col lg:w-2/3 lg:h-screen">
           <div className="sticky bg-custom-white w-full p-4 z-50 border-b border-custom-blue shadow-md">
-            <Input placeholder="meklēt" onChange={onSearch} style={{ width: 200 }} /> {schools?.length} rezultāti
+            <Input placeholder="meklēt" onChange={e => setSearchQuery(e.target.value)} style={{ width: 200 }} /> {schools?.length} rezultāti
             <div>
               <p className="mb-2">
                 Maksimālais attālums
@@ -213,9 +218,9 @@ function App() {
                   className="m-4 border border-custom-blue rounded-md shadow-md flex flex-col"
                 >
                   <div className="border-b border-custom-blue p-4 text-xl">{val.name}</div>
-                  <p className="p-4">
-                    Centralā eksāmena rezultāts: <span className="text-xl">{val.examScore}%</span>
-                  </p>
+                  {val.examScore != null ? <p className="p-4">
+                    Centralā eksāmena rezultāts: <span className="text-xl">{val.examScore.toFixed(1)} / 100</span>
+                  </p> : <p>Centralizēto eksāmenu rezultāti trūkst.</p>}
 
                 </li>
               ))

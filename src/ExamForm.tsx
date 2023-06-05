@@ -1,6 +1,6 @@
 interface ExamFormData {
 	address: string;
-	checkedExams: string[];
+	examsToCheck: string[];
 }
 
 // interface ExamFormProps {
@@ -48,19 +48,19 @@ function ExamForm() {
 			const dataRaw = new FormData(document.getElementById('examForm')! as HTMLFormElement);
 			let formData: ExamFormData = {
 				address: dataRaw.get("address") as string,
-				checkedExams: []
+				examsToCheck: []
 			}
 
-			if(dataRaw.has("matematika")) formData.checkedExams.push("matematika");
-			if(dataRaw.has("latv_val")) formData.checkedExams.push("latv_val");
-			if(dataRaw.has("anglu_val")) formData.checkedExams.push("anglu_val");
-			if(dataRaw.has("francu_val")) formData.checkedExams.push("francu_val");
-			if(dataRaw.has("krievu_val")) formData.checkedExams.push("krievu_val");
-			if(dataRaw.has("vacu_val")) formData.checkedExams.push("vacu_val");
-			if(dataRaw.has("biologija")) formData.checkedExams.push("biologija");
-			if(dataRaw.has("fizika")) formData.checkedExams.push("fizika");
-			if(dataRaw.has("kimija")) formData.checkedExams.push("kimija");
-			if(dataRaw.has("vesture")) formData.checkedExams.push("vesture");
+			if(dataRaw.has("matematika")) formData.examsToCheck.push("matematika");
+			if(dataRaw.has("latv_val")) formData.examsToCheck.push("latv_val");
+			if(dataRaw.has("anglu_val")) formData.examsToCheck.push("anglu_val");
+			if(dataRaw.has("francu_val")) formData.examsToCheck.push("francu_val");
+			if(dataRaw.has("krievu_val")) formData.examsToCheck.push("krievu_val");
+			if(dataRaw.has("vacu_val")) formData.examsToCheck.push("vacu_val");
+			if(dataRaw.has("biologija")) formData.examsToCheck.push("biologija");
+			if(dataRaw.has("fizika")) formData.examsToCheck.push("fizika");
+			if(dataRaw.has("kimija")) formData.examsToCheck.push("kimija");
+			if(dataRaw.has("vesture")) formData.examsToCheck.push("vesture");
 
 			console.log(formData);
 			props.onSubmit.call(null, formData);
