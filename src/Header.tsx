@@ -3,15 +3,15 @@ import { Menu } from 'antd';
 function baseMenuItems() {
     const children = [
       {
-        label: "Meklēt",
-        href: "#",
-      },
-      {
-        label: "Par mums",
+        label: "Info",
         href: "#",
       },
       {
         label: "Aktualitātes",
+        href: "#",
+      },
+      {
+        label: "Valoda",
         href: "#",
       },
     ];
